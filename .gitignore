@@ -5,5 +5,4 @@ __py*
 *.DS_Store*
 Photo*
 snapshot.*
-
-
+/pngs/
