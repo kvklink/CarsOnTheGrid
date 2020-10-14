@@ -239,11 +239,11 @@ if __name__ == '__main__':
     typ = "RWP2"
     RAND_SEED = "%.30f" % time()
     # 1584493223.638249874114990234375000000000]
-    print(RAND_SEED)
+    # print(RAND_SEED)
     SOURCE_POS = (0, 0)
     sim = RWP2Simulation(RAND_SEED, SOURCE_POS, RWP2_zigzag_23())
     sim.simulate()
-    print(sim.cars[0].courses)
+    # print(sim.cars[0].courses)
 
     for i in range(200):
         gui = GUISnapshot2(sim, i)
