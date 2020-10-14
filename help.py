@@ -37,7 +37,7 @@ def unzip(courses, mod):
     return xs, ys
 
 
-def RWP1_diagonal():
+def rwp_1_diagonal():
     pair = [(X_MAX, Y_MAX), (0, 0)]
     trace = []
     for i in range(100):
@@ -45,16 +45,16 @@ def RWP1_diagonal():
     return trace
 
 
-def RWP2_diagonal():
+def rwp_2_diagonal():
     trace = [(X_MAX * 100, Y_MAX * 100)]
     return trace
 
 
-def RD_diagonal():
-    return RWP1_diagonal()
+def rd_diagonal():
+    return rwp_1_diagonal()
 
 
-def MG1_diagonal():
+def mg_1_diagonal():
     x, y = 0, 0
     trace = []
     for i in range(X_MAX):
@@ -70,7 +70,7 @@ def MG1_diagonal():
     return course
 
 
-def MG2_diagonal():
+def mg_2_diagonal():
     x, y = 0, 0
     trace = []
     for i in range(1000):
@@ -82,15 +82,15 @@ def MG2_diagonal():
     return trace
 
 
-def RWP2_up():
+def rwp_2_up():
     return [(0, 5000)]
 
 
-def RWP2_right():
+def rwp_2_right():
     return [(5000, 0)]
 
 
-def RWP2_zigzag_14():
+def rwp_2_zigzag_14():
     targets = []
     for i in range(0, 1600, 5):
         tgts = [(i, i), (i + 1, i + 4), (i + 4, i + 1)]
@@ -98,7 +98,7 @@ def RWP2_zigzag_14():
     return targets[1:]
 
 
-def RWP2_zigzag_23():
+def rwp_2_zigzag_23():
     targets = []
     for i in range(0, 1600, 5):
         tgts = [(i, i), (i + 2, i + 3), (i + 3, i + 2)]
@@ -107,4 +107,4 @@ def RWP2_zigzag_23():
 
 
 if __name__ == '__main__':
-    print(RWP2_zigzag_14())
+    print(rwp_2_zigzag_14())
