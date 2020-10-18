@@ -1,8 +1,9 @@
 from time import time
+
 from base import *
 
 
-class RWP1Car(SynCar):
+class RWP2DCar(SynCar):
     def set_target(self):
         if self.target_idx == len(self.targets):
             px, py = self.get_prev_target()
@@ -21,7 +22,7 @@ class RWP1Car(SynCar):
             self.targets.append((tx, ty))
 
 
-class RWP2Car(SynCar):
+class RWP3DCar(SynCar):
     def set_target(self):
         if self.target_idx == len(self.targets):
             px, py = self.get_prev_target()
@@ -83,7 +84,7 @@ class RDCar(SynCar):
             self.targets.append(target)
 
 
-class MG1Car(SynMGCar):
+class MG2DCar(SynMGCar):
     def __init__(self, index, seed, source_pos, targets=None):
         super().__init__(index, seed, source_pos, targets, 1)
 
@@ -147,7 +148,7 @@ class MG1Car(SynMGCar):
             self.targets.append(dir)
 
 
-class MG2Car(SynMGCar):
+class MG3DCar(SynMGCar):
     def __init__(self, index, seed, source_pos, targets=None):
         super().__init__(index, seed, source_pos, targets, 2)
 
@@ -199,18 +200,28 @@ class MG2Car(SynMGCar):
             self.targets.append(dir)
 
 
-class RWP1Simulation(SynSimulation):
-    def __init__(self, seed, source_pos, source_source):
-        super().__init__()
-        self.cars.append(RWP1Car(0, seed, source_pos, source_source))
-        self.cars.extend([RWP1Car(i, seed, source_pos) for i in range(1, NUM_OF_CARS)])
+class PG2DCar(SynCar):
+    def set_target(self) -> None:
+        pass
 
 
-class RWP2Simulation(TorSynSimulation):
+class PG3DCar(SynCar):
+    def set_target(self) -> None:
+        pass
+
+
+class RWP2DSimulation(SynSimulation):
     def __init__(self, seed, source_pos, source_source):
         super().__init__()
-        self.cars.append(RWP2Car(0, seed, source_pos, source_source))
-        self.cars.extend([RWP2Car(i, seed, source_pos) for i in range(1, NUM_OF_CARS)])
+        self.cars.append(RWP2DCar(0, seed, source_pos, source_source))
+        self.cars.extend([RWP2DCar(i, seed, source_pos) for i in range(1, NUM_OF_CARS)])
+
+
+class RWP3DSimulation(TorSynSimulation):
+    def __init__(self, seed, source_pos, source_source):
+        super().__init__()
+        self.cars.append(RWP3DCar(0, seed, source_pos, source_source))
+        self.cars.extend([RWP3DCar(i, seed, source_pos) for i in range(1, NUM_OF_CARS)])
 
 
 class RDSimulation(SynSimulation):
@@ -220,18 +231,32 @@ class RDSimulation(SynSimulation):
         self.cars.extend([RDCar(i, seed, source_pos) for i in range(1, NUM_OF_CARS)])
 
 
-class MG1Simulation(SynSimulation):
+class MG2DSimulation(SynSimulation):
     def __init__(self, seed, source_pos, source_source):
         super().__init__()
-        self.cars.append(MG1Car(0, seed, source_pos, source_source))
-        self.cars.extend([MG1Car(i, seed, source_pos) for i in range(1, NUM_OF_CARS)])
+        self.cars.append(MG2DCar(0, seed, source_pos, source_source))
+        self.cars.extend([MG2DCar(i, seed, source_pos) for i in range(1, NUM_OF_CARS)])
 
 
-class MG2Simulation(TorSynSimulation):
+class MG3DSimulation(TorSynSimulation):
     def __init__(self, seed, source_pos, source_source):
         super().__init__()
-        self.cars.append(MG2Car(0, seed, source_pos, source_source))
-        self.cars.extend([MG2Car(i, seed, source_pos) for i in range(1, NUM_OF_CARS)])
+        self.cars.append(MG3DCar(0, seed, source_pos, source_source))
+        self.cars.extend([MG3DCar(i, seed, source_pos) for i in range(1, NUM_OF_CARS)])
+
+
+class PG2DSimulation(SynSimulation):
+    def __init__(self, seed, source_pos, source_source):
+        super().__init__()
+        self.cars.append(PG2DCar(0, seed, source_pos, source_source))
+        self.cars.extend([PG2DCar(i, seed, source_pos) for i in range(1, NUM_OF_CARS)])
+
+
+class PG3DSimulation(TorSynSimulation):
+    def __init__(self, seed, source_pos, source_source):
+        super().__init__()
+        self.cars.append(PG3DCar(0, seed, source_pos, source_source))
+        self.cars.extend([PG3DCar(i, seed, source_pos) for i in range(1, NUM_OF_CARS)])
 
 
 if __name__ == '__main__':
@@ -241,7 +266,7 @@ if __name__ == '__main__':
     # 1584493223.638249874114990234375000000000]
     # print(RAND_SEED)
     SOURCE_POS = (0, 0)
-    sim = RWP2Simulation(RAND_SEED, SOURCE_POS, rwp_2_zigzag_23())
+    sim = RWP3DSimulation(RAND_SEED, SOURCE_POS, rwp_2_zigzag_23())
     sim.simulate()
     # print(sim.cars[0].courses)
 
