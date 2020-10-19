@@ -1,6 +1,7 @@
 from time import time
 
 from base import *
+from view import GUISnapshot2
 
 
 class RWP2DCar(SynCar):
