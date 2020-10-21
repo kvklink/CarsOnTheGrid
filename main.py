@@ -222,17 +222,6 @@ class PG2DCar(SynCar):
             self.targets.append(target)
 
 
-class PG3DCar(SynCar):
-    def __init__(self, index, seed, source_pos, matrix, targets=None) -> None:
-        super().__init__(index, seed, source_pos, targets)
-
-        self.matrix: np.matrix = matrix
-        self.generator: np.random.Generator = np.random.default_rng()
-
-    def set_target(self) -> None:
-        pass  # TODO: implement
-
-
 class RWP2DSimulation(SynSimulation):
     def __init__(self, seed, source_pos, source_source):
         super().__init__()
@@ -271,17 +260,9 @@ class MG3DSimulation(TorSynSimulation):
 class PG2DSimulation(SynSimulation):
     def __init__(self, seed, source_pos, source_source, input_image):
         super().__init__()
-        self.matrix = load_heatmap(input_image)
-        self.cars.append(PG2DCar(0, seed, source_pos, self.matrix, source_source))
-        self.cars.extend([PG2DCar(i, seed, source_pos, self.matrix) for i in range(1, NUM_OF_CARS)])
-
-
-class PG3DSimulation(TorSynSimulation):
-    def __init__(self, seed, source_pos, source_source, input_image):
-        super().__init__()
-        self.matrix = load_heatmap(input_image)
-        self.cars.append(PG3DCar(0, seed, source_pos, self.matrix, source_source))
-        self.cars.extend([PG3DCar(i, seed, source_pos, self.matrix) for i in range(1, NUM_OF_CARS)])
+        matrix = load_heatmap(input_image)
+        self.cars.append(PG2DCar(0, seed, source_pos, matrix, source_source))
+        self.cars.extend([PG2DCar(i, seed, source_pos, matrix) for i in range(1, NUM_OF_CARS)])
 
 
 if __name__ == '__main__':
