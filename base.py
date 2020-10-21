@@ -130,7 +130,7 @@ class Simulation:
     def calculate_neighbor_percentage(self) -> None:
         assert False, "not implemented"
 
-    def simulate(self) -> None:
+    def simulate(self) -> int:
         for _ in range(PRE_RUN_COUNT):
             for car in self.cars[1:]:
                 car.move()
@@ -148,6 +148,7 @@ class Simulation:
             if not EXCEED_MOVES and rd == NUM_OF_MOVES:
                 break
             rd += 1
+        return rd
 
     def summary(self) -> ([(int, int)], [(int, int)], int, int):
         courses: [(int, int)] = []

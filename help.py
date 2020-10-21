@@ -5,7 +5,7 @@ from PIL import Image
 
 X_MAX = 50
 Y_MAX = X_MAX
-NUM_OF_CARS = 2
+NUM_OF_CARS = 20
 NUM_OF_MOVES = 500
 PRE_RUN_COUNT = 100
 EXCEED_MOVES = False

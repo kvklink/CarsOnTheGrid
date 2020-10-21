@@ -216,9 +216,9 @@ class PG2DCar(SynCar):
                 self.targets.append(self.get_prev_target())
                 return
 
-            choice: int = self.generator.choice(self.matrix.size,
-                                                p=np.array(self.matrix).flatten())
-            target: (int, int) = (choice // 100, choice % 100)
+            # Choose a random point based on the probabilities on the heatmap
+            choice: int = self.generator.choice(self.matrix.size, p=np.array(self.matrix).flatten())
+            target: (int, int) = (choice // 100 / 2, (50 - choice % 100 / 2))
             self.targets.append(target)
 
 
@@ -290,9 +290,10 @@ if __name__ == '__main__':
     # print(RAND_SEED)
     SOURCE_POS = (0, 0)
     sim = PG2DSimulation(RAND_SEED, SOURCE_POS, rwp_2_zigzag_23(), "./heatmaps/corner.jpg")
-    sim.simulate()
+    step_count = sim.simulate()
 
-    for i in range(200):
+    print("Finished simulation, drawing .png files...")
+    for i in range(step_count):
         gui = GUISnapshot2(sim, i)
         gui.draw()
         gui.save(f"./pngs/{i}")
