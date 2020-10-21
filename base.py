@@ -21,7 +21,6 @@ class Car:
         self.courses: [(int, int)] = [pos]
         self.targets: [(int, int)] = [pos]
         if targets is not None:
-            print(targets)
             self.targets.extend(targets)
         self.target_idx: int = 1
 
@@ -208,7 +207,3 @@ class TorSynSimulation(Simulation):
             rate = num_of_nbrs / NUM_OF_CARS
             rates.append(rate)
         self.neighbor_percentage.append((sum(rates) / NUM_OF_CARS))
-
-
-if __name__ == '__main__':
-    pass

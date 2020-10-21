@@ -1,17 +1,20 @@
 import math
 
+import numpy as np
+from PIL import Image
+
 X_MAX = 50
 Y_MAX = X_MAX
-NUM_OF_CARS = 50
+NUM_OF_CARS = 2
 NUM_OF_MOVES = 500
 PRE_RUN_COUNT = 100
-EXCEED_MOVES = True
+EXCEED_MOVES = False
 
 fig_size = (7, 7)
 
 assert 0 < X_MAX
 assert 0 < Y_MAX
-assert 0 < NUM_OF_CARS
+assert 1 < NUM_OF_CARS  # We need at least one car next to the source car
 assert 0 < NUM_OF_MOVES
 
 
@@ -35,6 +38,30 @@ def unzip(courses, mod):
         xs = list(map(lambda x: x, list(xys[0])))
         ys = list(map(lambda y: y, list(xys[1])))
     return xs, ys
+
+
+def load_heatmap(input_image: str) -> np.matrix:
+    """Convert input image into matrix of probabilities
+
+    If none is given, will raise a FileNotFoundError
+    Input must be a 100x100 image, otherwise an AttributeError is raised
+
+    :param input_image: str
+        Path to image to be converted
+    """
+
+    if input_image is None:
+        raise FileNotFoundError('Missing input file for probability grid')
+
+    # Open image, and convert to grayscale
+    image = Image.open(input_image).convert('L')
+
+    if image.size != (100, 100):
+        raise AttributeError('Input image must be 100x100 pixels')
+
+    # Normalize image into a probability matrix where total sum == 1
+    image_matrix = np.matrix(image).transpose()
+    return image_matrix / image_matrix.sum()
 
 
 def rwp_1_diagonal():
