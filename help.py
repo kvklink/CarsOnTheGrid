@@ -5,10 +5,10 @@ from PIL import Image
 
 X_MAX = 50
 Y_MAX = X_MAX
-NUM_OF_CARS = 20
-NUM_OF_MOVES = 500
+NUM_OF_CARS = 25
+NUM_OF_MOVES = 200
 PRE_RUN_COUNT = 100
-EXCEED_MOVES = False
+EXCEED_MOVES = True
 
 fig_size = (7, 7)
 
