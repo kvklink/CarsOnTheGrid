@@ -8,14 +8,12 @@ def run(_args: (int, int)) -> [int]:
     amount, thread_index = _args
     result = []
     for count in tqdm(range(amount), position=thread_index):
-        RAND_SEED = "%.30f" % time()
+        simulation_seed = "%.30f" % time()
 
-        simulation = PG2DSimulation(RAND_SEED, SOURCE_POS, SOURCE_TARGETS, HEAT_MAPS)
+        simulation = PG2DSimulation(simulation_seed, SOURCE_POS, SOURCE_TARGETS, HEAT_MAPS)
         simulation.simulate()
         rounds = len(simulation.num_of_broadcasters) - 1
         result.append(rounds)
-
-    print(f'Finished running {len(result)} simulations')
     return result
 
 
@@ -23,15 +21,14 @@ if __name__ == '__main__':
     # Simulation settings
     # MAKE SURE VARIABLES IN HELP.PY ARE ALSO CORRECT
     # EXCEED_MOVES must be set to True
-    SOURCE_POS = (0, 0)
-    SOURCE_TARGETS = rwp_2_zigzag_14()
+    SOURCE_POS = (25, 25)
+    SOURCE_TARGETS = diamond()
     TOTAL_SIMULATION_COUNT = 10000
     # Only required for PGMM simulations
-    HEAT_MAPS = ["./heatmaps/5-blobs/left-top.jpg",
-                 "./heatmaps/5-blobs/left-bottom.jpg",
-                 "./heatmaps/5-blobs/right-top.jpg",
-                 "./heatmaps/5-blobs/right-bottom.jpg",
-                 "./heatmaps/5-blobs/middle.jpeg"]
+    HEAT_MAPS = ["./heatmaps/4-circles/left-top.jpg",
+                 "./heatmaps/4-circles/left-bottom.jpg",
+                 "./heatmaps/4-circles/right-top.jpg",
+                 "./heatmaps/4-circles/right-bottom.jpg"]
 
     cpus = mp.cpu_count()
     print(f'Amount of cores available: {cpus}')

@@ -100,7 +100,7 @@ def mg_1_diagonal():
 def mg_2_diagonal():
     x, y = 0, 0
     trace = []
-    for i in range(1000):
+    for _ in range(1000 ** 100):
         x += 1
         trace.append((x, y))
         y += 1
@@ -110,16 +110,16 @@ def mg_2_diagonal():
 
 
 def rwp_2_up():
-    return [(0, 5000)]
+    return [(25, 5000000) for _ in range(1000)]
 
 
 def rwp_2_right():
-    return [(5000, 0)]
+    return [(5000000, 25) for _ in range(1000)]
 
 
 def rwp_2_zigzag_14():
     targets = []
-    for i in range(0, 1600, 5):
+    for i in range(0, 100000, 5):
         tgts = [(i, i), (i + 1, i + 4), (i + 4, i + 1)]
         targets.extend(tgts)
     return targets[1:]
@@ -127,7 +127,7 @@ def rwp_2_zigzag_14():
 
 def rwp_2_zigzag_23():
     targets = []
-    for i in range(0, 1600, 5):
+    for i in range(0, 100000, 5):
         tgts = [(i, i), (i + 2, i + 3), (i + 3, i + 2)]
         targets.extend(tgts)
     return targets[1:]
@@ -135,7 +135,7 @@ def rwp_2_zigzag_23():
 
 def rectangle():
     targets = [(25, 25)]
-    for _ in range(1000):
+    for _ in range(100000):
         targets.append((25, 10))
         targets.append((40, 10))
         targets.append((40, 40))
@@ -147,7 +147,7 @@ def rectangle():
 
 def diamond():
     targets = [(25, 25)]
-    for _ in range(1000):
+    for _ in range(10000):
         targets.append((25, 10))
         targets.append((40, 25))
         targets.append((25, 40))
