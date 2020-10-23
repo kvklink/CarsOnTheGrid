@@ -118,9 +118,9 @@ class MG2DCar(SynMGCar):
                 weights = [0.25 for _ in range(4)]
 
             if len(self.courses) == 1:
-                dir = self.rand.choices(dirs, weights)
-                assert len(dir) == 1
-                dir = dir[0]
+                direction = self.rand.choices(dirs, weights)
+                assert len(direction) == 1
+                direction = direction[0]
             else:
                 last_x, last_y = self.courses[-2]
                 assert (last_x, last_y) in dirs
@@ -140,13 +140,13 @@ class MG2DCar(SynMGCar):
                 if plus_idx != -1:
                     weights[plus_idx] += plus_weight
                 else:
-                    for i, wei in enumerate(weights):
+                    for index, wei in enumerate(weights):
                         if wei != 0:
-                            weights[i] = wei + plus_weight * (1 / (len(weights) - 1))
-                dir = self.rand.choices(dirs, weights)
-                assert len(dir) == 1
-                dir = dir[0]
-            self.targets.append(dir)
+                            weights[index] = wei + plus_weight * (1 / (len(weights) - 1))
+                direction = self.rand.choices(dirs, weights)
+                assert len(direction) == 1
+                direction = direction[0]
+            self.targets.append(direction)
 
 
 class MG3DCar(SynMGCar):
@@ -170,9 +170,9 @@ class MG3DCar(SynMGCar):
             weights = [0.25 for _ in range(4)]
 
             if len(self.courses) == 1:
-                dir = self.rand.choices(dirs, weights)
-                assert len(dir) == 1
-                dir = dir[0]
+                direction = self.rand.choices(dirs, weights)
+                assert len(direction) == 1
+                direction = direction[0]
             else:
                 last_x, last_y = self.courses[-2]
                 last_x, last_y = last_x % X_MAX, last_y % Y_MAX
@@ -194,11 +194,11 @@ class MG3DCar(SynMGCar):
                 plus_weight, weights[last_idx] = weights[last_idx], 0
                 weights[plus_idx] += plus_weight
 
-                dir = self.rand.choices(dirs, weights)
-                assert len(dir) == 1
-                dir = dir[0]
-            # dir = round(dir[0], 0), round(dir[1], 0)
-            self.targets.append(dir)
+                direction = self.rand.choices(dirs, weights)
+                assert len(direction) == 1
+                direction = direction[0]
+            # direction = round(direction[0], 0), round(direction[1], 0)
+            self.targets.append(direction)
 
 
 class PG2DCar(SynCar):
@@ -226,35 +226,35 @@ class RWP2DSimulation(SynSimulation):
     def __init__(self, seed, source_pos, source_source):
         super().__init__()
         self.cars.append(RWP2DCar(0, seed, source_pos, source_source))
-        self.cars.extend([RWP2DCar(i, seed, source_pos) for i in range(1, NUM_OF_CARS)])
+        self.cars.extend([RWP2DCar(car_i, seed, source_pos) for car_i in range(1, NUM_OF_CARS)])
 
 
 class RWP3DSimulation(TorSynSimulation):
     def __init__(self, seed, source_pos, source_source):
         super().__init__()
         self.cars.append(RWP3DCar(0, seed, source_pos, source_source))
-        self.cars.extend([RWP3DCar(i, seed, source_pos) for i in range(1, NUM_OF_CARS)])
+        self.cars.extend([RWP3DCar(car_i, seed, source_pos) for car_i in range(1, NUM_OF_CARS)])
 
 
 class RDSimulation(SynSimulation):
     def __init__(self, seed, source_pos, source_source):
         super().__init__()
         self.cars.append(RDCar(0, seed, source_pos, source_source))
-        self.cars.extend([RDCar(i, seed, source_pos) for i in range(1, NUM_OF_CARS)])
+        self.cars.extend([RDCar(car_i, seed, source_pos) for car_i in range(1, NUM_OF_CARS)])
 
 
 class MG2DSimulation(SynSimulation):
     def __init__(self, seed, source_pos, source_source):
         super().__init__()
         self.cars.append(MG2DCar(0, seed, source_pos, source_source))
-        self.cars.extend([MG2DCar(i, seed, source_pos) for i in range(1, NUM_OF_CARS)])
+        self.cars.extend([MG2DCar(car_i, seed, source_pos) for car_i in range(1, NUM_OF_CARS)])
 
 
 class MG3DSimulation(TorSynSimulation):
     def __init__(self, seed, source_pos, source_source):
         super().__init__()
         self.cars.append(MG3DCar(0, seed, source_pos, source_source))
-        self.cars.extend([MG3DCar(i, seed, source_pos) for i in range(1, NUM_OF_CARS)])
+        self.cars.extend([MG3DCar(car_i, seed, source_pos) for car_i in range(1, NUM_OF_CARS)])
 
 
 class PG2DSimulation(SynSimulation):
@@ -262,7 +262,7 @@ class PG2DSimulation(SynSimulation):
         super().__init__()
         matrix = load_heatmap(input_image)
         self.cars.append(PG2DCar(0, seed, source_pos, matrix, source_source))
-        self.cars.extend([PG2DCar(i, seed, source_pos, matrix) for i in range(1, NUM_OF_CARS)])
+        self.cars.extend([PG2DCar(car_i, seed, source_pos, matrix) for car_i in range(1, NUM_OF_CARS)])
 
 
 if __name__ == '__main__':
