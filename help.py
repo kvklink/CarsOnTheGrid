@@ -5,10 +5,10 @@ from PIL import Image
 
 X_MAX = 50
 Y_MAX = X_MAX
-NUM_OF_CARS = 50
-NUM_OF_MOVES = 200
+NUM_OF_CARS = 25
+NUM_OF_MOVES = 100000
 PRE_RUN_COUNT = 100
-EXCEED_MOVES = True
+EXCEED_MOVES = False
 
 fig_size = (7, 7)
 
@@ -131,6 +131,27 @@ def rwp_2_zigzag_23():
         tgts = [(i, i), (i + 2, i + 3), (i + 3, i + 2)]
         targets.extend(tgts)
     return targets[1:]
+
+
+def rectangle():
+    targets = [(25, 25)]
+    for _ in range(1000):
+        targets.append((25, 10))
+        targets.append((40, 10))
+        targets.append((40, 40))
+        targets.append((10, 40))
+        targets.append((10, 10))
+
+    return targets
+
+
+def diamond():
+    targets = [(25, 25)]
+    for _ in range(1000):
+        targets.append((25, 10))
+        targets.append((40, 25))
+        targets.append((25, 40))
+        targets.append((10, 25))
 
 
 if __name__ == '__main__':

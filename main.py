@@ -202,7 +202,7 @@ class MG3DCar(SynMGCar):
 
 
 class PG2DCar(SynCar):
-    def __init__(self, index, seed, source_pos, matrix, targets=None) -> None:
+    def __init__(self, index, seed, source_pos, matrix=None, targets=None) -> None:
         super().__init__(index, seed, source_pos, targets)
 
         self.matrix: np.matrix = matrix
@@ -258,11 +258,23 @@ class MG3DSimulation(TorSynSimulation):
 
 
 class PG2DSimulation(SynSimulation):
-    def __init__(self, seed, source_pos, source_source, input_image):
+    def __init__(self, seed, source_pos: (int, int), source_source: (int, int), input_images: [str]):
         super().__init__()
-        matrix = load_heatmap(input_image)
-        self.cars.append(PG2DCar(0, seed, source_pos, matrix, source_source))
-        self.cars.extend([PG2DCar(car_i, seed, source_pos, matrix) for car_i in range(1, NUM_OF_CARS)])
+        # Add source vehicle
+        self.cars.append(PG2DCar(0, seed, source_pos, targets=source_source))
+        # Add the recipient vehicles
+        matrices = [load_heatmap(image) for image in input_images]
+        chunk_amount = len(matrices)
+        chunk_size = (NUM_OF_CARS - 1) // chunk_amount
+        chunks = [chunk_size for _ in range(chunk_amount)]
+        for j in range((NUM_OF_CARS - 1) % chunk_amount):
+            chunks[j] += 1
+        car_i = 1
+        for j, chunk in enumerate(chunks):
+            for _ in range(chunk):
+                new_car = PG2DCar(car_i, seed, source_pos, matrix=matrices[j])
+                self.cars.append(new_car)
+                car_i += 1
 
 
 if __name__ == '__main__':
@@ -270,7 +282,7 @@ if __name__ == '__main__':
     # 1584493223.638249874114990234375000000000]
     # print(RAND_SEED)
     SOURCE_POS = (0, 0)
-    sim = PG2DSimulation(RAND_SEED, SOURCE_POS, rwp_2_zigzag_23(), "./heatmaps/corner.jpg")
+    sim = PG2DSimulation(RAND_SEED, SOURCE_POS, None, ["./heatmaps/corner.jpg"])
     step_count = sim.simulate()
 
     print("Finished simulation, drawing .png files...")
