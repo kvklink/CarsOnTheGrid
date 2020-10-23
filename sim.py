@@ -9,7 +9,7 @@ def run(amount: int) -> [int]:
         RAND_SEED = "%.30f" % time()
         print(count, RAND_SEED)
 
-        simulation = RWP2DSimulation(RAND_SEED, SOURCE_POS, None)
+        simulation = RWP2DSimulation(RAND_SEED, SOURCE_POS, SOURCE_TARGETS)
         simulation.simulate()
         rounds = len(simulation.num_of_broadcasters) - 1
         result.append(rounds)
@@ -22,6 +22,7 @@ if __name__ == '__main__':
     # MAKE SURE VARIABLES IN HELP.PY ARE ALSO CORRECT
     # EXCEED_MOVES must be set to True
     SOURCE_POS = (0, 0)
+    SOURCE_TARGETS = None
     TOTAL_SIMULATION_COUNT = 10000
 
     cpus = mp.cpu_count()
